@@ -65,6 +65,8 @@ jobs:
         azcliversion: 2.0.72
         inlineScript: |
             ls
+            cd food-tracker-ml
+            ls
             az storage blob upload-batch --account-name foodtrackerstorage -d '$web' -s ./food-tracker-ml/dist
     
   # Azure logout 
