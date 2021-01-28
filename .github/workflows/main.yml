@@ -52,7 +52,7 @@ jobs:
     - name: Build 🔨
       run: |
         cd food-tracker-ml
-        npm build
+        npm run build
 
     - name: Azure Login 🔑
       uses: azure/login@v1
