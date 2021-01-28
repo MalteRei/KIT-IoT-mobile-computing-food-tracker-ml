@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ImageModel from '../helpers/ImageModel';
 
 export interface IImageModelProps {
-    videoElementToPredict: HTMLVideoElement | null
+    videoElementToPredict: React.MutableRefObject<HTMLVideoElement | null>
 }
 const VideoPrediction: React.FunctionComponent<IImageModelProps> = (props) => {
     const { videoElementToPredict } = props;
@@ -34,6 +34,10 @@ const VideoPrediction: React.FunctionComponent<IImageModelProps> = (props) => {
         return cleanUpModel;
     });
 
+   
+
+
+
     if (!model || !model.isLoaded()) {
         return (
             <h2>
@@ -41,7 +45,7 @@ const VideoPrediction: React.FunctionComponent<IImageModelProps> = (props) => {
             </h2>
         );
     }
-    if(!videoElementToPredict){
+    if(!videoElementToPredict || !videoElementToPredict.current){
         return (
             <h2>
                 Video element not yet there.
@@ -51,12 +55,18 @@ const VideoPrediction: React.FunctionComponent<IImageModelProps> = (props) => {
 
 
     const predictVideo = () => {
-        console.dir(model.predict(videoElementToPredict));
+        console.log("predict video");
+        if(videoElementToPredict.current) {
+        console.dir(model.predict(videoElementToPredict.current));
          // Call this function again to keep predicting when the browser is ready.
-        //window.requestAnimationFrame(predictVideo);
+        }
+        window.requestAnimationFrame(predictVideo);
     }
+    if(videoElementToPredict && videoElementToPredict.current){
+        predictVideo();
 
-    videoElementToPredict.addEventListener('loadeddata', predictVideo);
+    }
+    
     return (
         <p>Prediction running.</p>
     );

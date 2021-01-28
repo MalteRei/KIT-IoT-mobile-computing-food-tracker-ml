@@ -24,8 +24,23 @@ class ImageModel {
     }
 
     public async load() {
+        const signatureResponse = await fetch(this.baseUrl + this.signatureFileName);
+        if(signatureResponse.ok){
+            const signatureJson = await signatureResponse.json();
+            this.signature = signatureJson;
+            this.modelPath = this.baseUrl + this.signature.filename;
+            [this.width, this.height] = this.signature.inputs.Image.shape.slice(1, 3);
+            this.outputName = this.signature.outputs[this.outputKey].name;
+            this.classes = this.signature.classes.Label;
+            this.model = await  tf.loadGraphModel(this.modelPath);
+        } else {
+            throw Error("could not load model");
+        }
+        /*
         fetch(this.baseUrl + this.signatureFileName)
             .then(signatureResponse => {
+                console.dir(signatureResponse);
+                console.log(signatureResponse.statusText);
                 signatureResponse.json()
                     .then(async signatureJson => {
                         console.dir(signatureJson);
@@ -34,7 +49,9 @@ class ImageModel {
                         [this.width, this.height] = this.signature.inputs.Image.shape.slice(1, 3);
                         this.outputName = this.signature.outputs[this.outputKey].name;
                         this.classes = this.signature.classes.Label;
-                        this.model = await tf.loadGraphModel(this.modelPath);
+                        tf.loadGraphModel(this.modelPath)
+                        .then(graphModel => this.model = graphModel)
+                        .catch(err => console.dir(err));
                     })
                     .catch(err => {
                         console.dir(err);
@@ -44,7 +61,7 @@ class ImageModel {
             .catch(err => {
                 console.dir(err);
                 throw err;
-            });
+            });*/
 
     }
 

@@ -16,11 +16,12 @@ const CameraFeed: React.FunctionComponent<ICameraFeedProps> = (props) => {
             videoRef.current.srcObject = cameraStream;
         }
       });
+
       
     return(
         <div>
             <video ref={videoRef} muted={true} autoPlay={true} id="camera-feed-video"></video>
-            <VideoPrediction videoElementToPredict={videoRef.current}></VideoPrediction>
+            <VideoPrediction videoElementToPredict={videoRef}></VideoPrediction>
         </div>
        
     );
