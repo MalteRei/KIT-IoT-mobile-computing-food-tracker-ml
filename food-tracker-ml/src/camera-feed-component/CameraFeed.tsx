@@ -20,7 +20,7 @@ const CameraFeed: React.FunctionComponent<ICameraFeedProps> = (props) => {
     return(
         <div>
             <video ref={videoRef} muted={true} autoPlay={true} id="camera-feed-video"></video>
-            <VideoPrediction signaturePath={"file:../../public/model/signature.json"} videoElementToPredict={videoRef.current}></VideoPrediction>
+            <VideoPrediction videoElementToPredict={videoRef.current}></VideoPrediction>
         </div>
        
     );

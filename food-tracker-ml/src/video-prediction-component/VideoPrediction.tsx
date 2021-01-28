@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import ImageModel from '../helpers/ImageModel';
 
 export interface IImageModelProps {
-    signaturePath: string,
     videoElementToPredict: HTMLVideoElement | null
 }
 const VideoPrediction: React.FunctionComponent<IImageModelProps> = (props) => {
-    const { signaturePath, videoElementToPredict } = props;
+    const { videoElementToPredict } = props;
     const [model, setModel] = useState<ImageModel | undefined>(undefined);
 
     const loadModel = () => {
@@ -33,7 +32,7 @@ const VideoPrediction: React.FunctionComponent<IImageModelProps> = (props) => {
     useEffect(() => {
         loadModel();
         return cleanUpModel;
-    }, [signaturePath]);
+    });
 
     if (!model || !model.isLoaded()) {
         return (

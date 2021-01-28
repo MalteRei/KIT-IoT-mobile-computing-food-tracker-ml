@@ -56,7 +56,7 @@ class ImageModel {
     }
 
     public isLoaded(): boolean {
-        return (this.model != undefined);
+        return (this.model !== undefined);
     }
 
     public predict(toPredict: tf.Tensor3D | ImageData | HTMLImageElement | HTMLCanvasElement |
@@ -89,7 +89,7 @@ class ImageModel {
             let left = 0;
             let bottom = 1;
             let right = 1;
-            if (imgHeight != imgWidth) {
+            if (imgHeight !== imgWidth) {
                 // the crops are normalized 0-1 percentage of the image dimension
                 const size = Math.min(imgHeight, imgWidth);
                 left = (imgWidth - size) / 2 / imgWidth;
