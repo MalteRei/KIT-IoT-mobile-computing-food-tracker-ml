@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import CameraFeed from "../camera-feed-component/CameraFeed";
+import VideoPrediction from "../video-prediction-component/VideoPrediction";
 
 const CameraStream: React.FunctionComponent = (props) => {
 

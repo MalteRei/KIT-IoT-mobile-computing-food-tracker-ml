@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import VideoPrediction from '../video-prediction-component/VideoPrediction';
 
 
 export interface ICameraFeedProps{
@@ -17,7 +18,11 @@ const CameraFeed: React.FunctionComponent<ICameraFeedProps> = (props) => {
       });
       
     return(
-        <video ref={videoRef} muted={true} autoPlay={true} id="camera-feed-video"></video>
+        <div>
+            <video ref={videoRef} muted={true} autoPlay={true} id="camera-feed-video"></video>
+            <VideoPrediction signaturePath={"file:../../public/model/signature.json"} videoElementToPredict={videoRef.current}></VideoPrediction>
+        </div>
+       
     );
 }
 
