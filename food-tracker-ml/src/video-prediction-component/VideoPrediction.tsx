@@ -11,7 +11,7 @@ const VideoPrediction: React.FunctionComponent<IImageModelProps> = (props) => {
 
     const loadModel = () => {
         if (!model) {
-            const newModel = new ImageModel(signaturePath);
+            const newModel = new ImageModel("https://foodtrackerstorage.z1.web.core.windows.net/model","signature.json");
             newModel.load()
                 .then(() => {
                     setModel(newModel);

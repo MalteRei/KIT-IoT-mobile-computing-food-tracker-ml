@@ -1,32 +1,51 @@
 import * as tf from '@tensorflow/tfjs';
 //import { readFileSync } from 'fs';
-import signatureDataFile from '../model/signature.json';
 class ImageModel {
 
+    private baseUrl: string;
+    private signatureFileName: string;
     private signature: any;
-    private modelPath: string;
-    private height: number;
-    private width: number;
-    private outputName: string;
+    private modelPath: string | undefined;
+    private height: number | undefined;
+    private width: number | undefined;
+    private outputName: string | undefined;
     private outputKey = "Confidences";
-    private classes: string[];
+    private classes: string[] | undefined;
     private model?: tf.GraphModel;
 
-    public constructor(signaturePath: string) {
-        console.dir(signaturePath);
-       /* const signatureData = readFileSync(signaturePath, "utf8");
-        console.dir(signatureData);
-        this.signature = JSON.parse(signatureData);*/
-        console.dir(signatureDataFile);
-        this.signature = signatureDataFile;
-        this.modelPath = `file:../model/${this.signature.filename}`;
-        [this.width, this.height] = this.signature.inputs.Image.shape.slice(1, 3);
-        this.outputName = this.signature.outputs[this.outputKey].name;
-        this.classes = this.signature.classes.Label;
+    public constructor(baseUrl: string, signatureFileName: string) {
+        if(!baseUrl.endsWith("/")){
+            this.baseUrl = baseUrl + "/";
+        } else {
+            this.baseUrl = baseUrl;
+        }
+
+        this.signatureFileName = signatureFileName;
     }
 
     public async load() {
-        this.model = await tf.loadGraphModel(this.modelPath);
+        fetch(this.baseUrl + this.signatureFileName)
+            .then(signatureResponse => {
+                signatureResponse.json()
+                    .then(async signatureJson => {
+                        console.dir(signatureJson);
+                        this.signature = signatureJson;
+                        this.modelPath = this.baseUrl + this.signature.filename;
+                        [this.width, this.height] = this.signature.inputs.Image.shape.slice(1, 3);
+                        this.outputName = this.signature.outputs[this.outputKey].name;
+                        this.classes = this.signature.classes.Label;
+                        this.model = await tf.loadGraphModel(this.modelPath);
+                    })
+                    .catch(err => {
+                        console.dir(err);
+                        throw err;
+                    });
+            })
+            .catch(err => {
+                console.dir(err);
+                throw err;
+            });
+
     }
 
     public dispose(): void {
@@ -47,7 +66,7 @@ class ImageModel {
                 return tf.browser.fromPixels(toPredict);
             } else {
                 return toPredict;
-            }            
+            }
         });
         const result = this.predictTensor(tensorToPredict);
         tensorToPredict.dispose();
@@ -59,7 +78,7 @@ class ImageModel {
         preprocess the image into pixel values of [0,1], center crop to a square
         and resize to the image input size, then run the prediction!
          */
-        if (!!this.model) {
+        if (!!this.model && this.height && this.width) {
             const [imgHeight, imgWidth] = image.shape.slice(0, 2);
             // convert image to 0-1
             const normalizedImage = tf.div(image, tf.scalar(255));
@@ -86,7 +105,7 @@ class ImageModel {
             ) as tf.Tensor;
             const resultsArray = results.dataSync();
             return {
-                [this.outputKey]: this.classes.reduce(
+                [this.outputKey]: this.classes?.reduce(
                     (acc, class_, idx) => {
                         return { [class_]: resultsArray[idx], ...acc }
                     }, {}

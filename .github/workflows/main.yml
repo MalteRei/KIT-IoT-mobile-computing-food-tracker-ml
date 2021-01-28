@@ -19,22 +19,52 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
 
+    
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+    - name: Checkout 🛎️
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+      uses: actions/checkout@v2
 
-    - uses: azure/login@v1
+
+    - name: Cache node modules
+      uses: actions/cache@v1
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - name: Node ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+      
+    - name: Install Dependencies 📦
+      run: |
+        cd food-tracker-ml
+        npm install
+
+    - name: Build 🔨
+      run: |
+        cd food-tracker-ml
+        npm build
+
+    - name: Azure Login 🔑
+      uses: azure/login@v1
       with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Upload to blob storage
+    - name: Upload to blob storage 🚀
       uses: azure/CLI@v1
       with:
         azcliversion: 2.0.72
         inlineScript: |
-            az storage blob upload-batch --account-name foodtrackerstorage -d '$web' -s .
+            az storage blob upload-batch --account-name foodtrackerstorage -d '$web' -s ./food-tracker-ml/dist
     
   # Azure logout 
     - name: logout
