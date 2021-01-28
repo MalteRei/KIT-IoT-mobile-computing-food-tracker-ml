@@ -34,7 +34,7 @@ jobs:
       with:
         azcliversion: 2.0.72
         inlineScript: |
-            az storage blob upload-batch --account-name <STORAGE_ACCOUNT_NAME> -d '$web' -s .
+            az storage blob upload-batch --account-name foodtrackerstorage -d '$web' -s .
     
   # Azure logout 
     - name: logout
