@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ImageModel from '../helpers/ImageModel';
 
 export interface IImageModelProps {
-    videoElementToPredict: React.MutableRefObject<HTMLVideoElement | null>
+    videoElementToPredict: HTMLVideoElement | undefined
 }
 const VideoPrediction: React.FunctionComponent<IImageModelProps> = (props) => {
     const { videoElementToPredict } = props;
@@ -45,7 +45,7 @@ const VideoPrediction: React.FunctionComponent<IImageModelProps> = (props) => {
             </h2>
         );
     }
-    if(!videoElementToPredict || !videoElementToPredict.current){
+    if(!videoElementToPredict){
         return (
             <h2>
                 Video element not yet there.
@@ -55,14 +55,15 @@ const VideoPrediction: React.FunctionComponent<IImageModelProps> = (props) => {
 
 
     const predictVideo = () => {
-        console.log("predict video");
-        if(videoElementToPredict.current) {
-        console.dir(model.predict(videoElementToPredict.current));
+       // console.log("predict video");
+        if(videoElementToPredict) {
+        //console.dir(model.predict(videoElementToPredict.current));
+        model.predict(videoElementToPredict)
          // Call this function again to keep predicting when the browser is ready.
         }
         window.requestAnimationFrame(predictVideo);
     }
-    if(videoElementToPredict && videoElementToPredict.current){
+    if(videoElementToPredict){
         predictVideo();
 
     }

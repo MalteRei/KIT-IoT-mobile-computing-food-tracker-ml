@@ -1,13 +1,235 @@
 body {
+  background-color: var(--color-foreground);
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  overflow-x: hidden;
+  padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+:root {
+  --color-primary:  rgb(0, 120, 212);;
+  --color-primary-darker: rgb(16, 110, 190);
+  --color-primary-dark: rgb(0, 90, 158);
+
+ /* --color-primary:  #fecd47;
+  --colors-bg-skyblue: #cad9e5;
+  --colors-bg-green: #d2e4ce;
+  --colors-bg-rosegold: #f8d3cc;
+  --colors-bg-spacegray: #7e7f83;
+  --colors-bg-silver: #e3e4e5;*/
+  --color-background: rgba(255, 255, 255, 1);
+  --color-foreground: rgba(242, 242, 242, 1);
+  --color-acrylic: rgba(255, 255, 255, 0.3);
+  --color-background-transparent: rgba(255, 255, 255, 0.9);
+  --color-foreground-transparent: rgba(242, 242, 242, 0.8);
+  --color-foreground-video-transparent: rgba(255, 255, 255, 0.5);
+  --color-text-default: black;
+ /* --color-text-secondary: #454545;*/
+ --color-text-secondary: #86868b;
+  --color-reveal-highlight: rgba(255, 255, 255, 1);
+  --color-reveal-highlight-center: rgba(255, 255, 255, 1);
+  --color-reveal-highlight-border: rgba(200, 198, 196, 0.6);
+  --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Icons", "Bahnschrift", "Segoe UI Webfont", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+   :root {
+    --color-primary:  rgb(0, 120, 212);;
+    --color-primary-darker: rgb(16, 110, 190);
+    --color-primary-dark: rgb(0, 90, 158);
+  
+      --color-background: rgba(26, 26, 26, 1);
+      --color-foreground: rgba(51, 51, 51, 1);
+      --color-background-transparent: rgba(26, 26, 26, 0.7);
+      --color-foreground-transparent: rgba(51, 51, 51, 0.8);
+      --color-foreground-video-transparent: rgba(0, 0, 0, 0.4);
+      --color-acrylic: rgba(26, 26, 26, .3);
+      --color-text-default: #f0f2f3;
+    /*  --color-text-secondary: #E5E5E5;*/
+    --color-text-secondary: #747474;
+
+      --color-reveal-highlight: rgba(255, 255, 255, 0.6);
+      --color-reveal-highlight-border: rgba(255, 255, 255, 0.3);
+      --color-reveal-highlight-center: rgba(255, 255, 255, 0);
+      --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Icons", "Bahnschrift", "Segoe UI Webfont", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+  }
+}
+
+
+/* Turn on custom 8px wide scrollbar */
+
+::-webkit-scrollbar {
+  width: 8px;
+  /* 1px wider than Lion. */
+  /* This is more usable for users trying to click it. */
+  background-color: rgba(0, 0, 0, 0);
+  -webkit-border-radius: 100px;
+}
+
+
+/* hover effect for both scrollbar area, and scrollbar 'thumb' */
+
+::-webkit-scrollbar:hover {
+  /*background-color: rgba(0, 0, 0, 0.09);*/
+  background-color: var(--color-reveal-highlight-border);
+}
+
+
+/* The scrollbar 'thumb' ...that marque oval shape in a scrollbar */
+
+::-webkit-scrollbar-thumb {
+  /* This is the EXACT color of Mac OS scrollbars. 
+     Yes, I pulled out digital color meter */
+  background: var(--color-text-secondary);
+  /*background: rgba(0,0,0,0.5);*/
+  -webkit-border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb:active {
+  /* background: rgba(0,0,0,0.61);*/
+  /* Some darker color when you click it */
+  background: var(--color-text-default);
+  -webkit-border-radius: 100px;
+}
+
+::-webkit-scrollbar-corner {
+  display: none;
+}
+
+h1 {
+  color: var(--color-text-default);
+  font-family: var(--font-family);
+  font-size: 2.625em;
+  line-height: 3.25em;
+  margin: 0;
+}
+
+h2 {
+  color: var(--color-text-default);
+  font-family: var(--font-family);
+  font-size: 2em;
+  line-height: 2.5em;
+  margin: 0;
+}
+
+h3 {
+  color: var(--color-text-default);
+  font-family: var(--font-family);
+  font-size: 1.75em;
+  line-height: 2.25em;
+  margin: 0;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+h4 {
+  color: var(--color-text-default);
+  font-family: var(--font-family);
+  font-size: 1.5em;
+  line-height: 2em;
+  margin: 0;
+}
+
+h5 {
+  color: var(--color-text-default);
+  font-family: var(--font-family);
+  font-size: 1.25em;
+  line-height: 1.75em;
+  margin: 0;
+}
+
+h6 {
+  color: var(--color-text-default);
+  font-family: var(--font-family);
+  font-size: 1.125em;
+  line-height: 1.5em;
+  margin: 0;
+}
+
+p {
+  color: var(--color-text-default);
+  font-size: 1em;
+  line-height: 1.375em;
+  font-family: var(--font-family);
+  margin: 0;
+}
+
+ol {
+  padding-left: 16px;
+}
+
+pre {
+  color: var(--color-text-default);
+  display: inline;
+  font-family: var(--font-family);
+  font-size: 1em;
+  line-height: 1.375em;
+  white-space: pre-line;
+  margin: 0;
+}
+
+a {
+  color: var(--color-text-default);
+  font-size: 1em;
+  line-height: 1.375em;
+  font-family: var(--font-family);
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+  margin: 4px;
+}
+
+i {
+  color: var(--color-text-default);
+  font-size: 1em;
+  line-height: 1.375em;
+  font-family: var(--font-family);
+}
+
+
+/* everywhere else */
+
+* {
+  color: var(--color-text-default);
+  font-family: var(--font-family);
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+
+button{
+  border: 1px solid var(--color-primary);
+  background-color: var(--color-primary);
+  color: var(--color-text-default);
+  border-radius: 4px;
+  margin-top: 0;
+  margin-right: 32px;
+  padding-right: 16px;
+  padding-left: 16px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  text-align: center;
+  min-width: 80px;
+    height: 32px;
+    user-select: none;
+    outline: transparent;
+    line-height: 32px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+button:active{
+  background-color: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+}
+
+button:hover{  
+  background-color: var(--color-primary-darker);
+
+  border-color: var(--color-primary-darker);
+
 }

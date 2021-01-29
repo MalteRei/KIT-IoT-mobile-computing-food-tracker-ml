@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
-import CameraStream from './camera-stream-component/CameraStream';
+import FoodTrackerContainer from './food-tracker-container/FoodTrackerContainer';
 
 function App() {
   return (
-    <CameraStream></CameraStream>
+    <FoodTrackerContainer/>
   );
 }
 

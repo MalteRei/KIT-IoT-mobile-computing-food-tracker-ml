@@ -121,6 +121,7 @@ class ImageModel {
                 { [this.signature.inputs.Image.name]: croppedImage }, this.outputName
             ) as tf.Tensor;
             const resultsArray = results.dataSync();
+            console.dir(resultsArray);
             return {
                 [this.outputKey]: this.classes?.reduce(
                     (acc, class_, idx) => {
