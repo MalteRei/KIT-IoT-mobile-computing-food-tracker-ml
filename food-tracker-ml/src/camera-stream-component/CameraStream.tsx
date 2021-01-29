@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import CameraFeed from "../camera-feed-component/CameraFeed";
 import './CameraStream.css'
 
 import logo from '../assets/images/cartoon-camera-illustration_23-2147533355.jpg';
@@ -67,7 +66,7 @@ const CameraStream: React.FunctionComponent<ICameraStream> = (props) => {
                 </p>
             )
             return (
-                <Prompt onButtonClicked={enableCamera} buttonText="Enable Camera" imageUrl={logo} title="Please enable your webcame to use the food tracker!" description={descriptionParagraph}/>
+                <Prompt onButtonClicked={enableCamera} buttonText="Enable Camera" imageUrl={logo} imageAlt="Illustration of a camera." title="Please enable your webcame to use the food tracker!" description={descriptionParagraph}/>
             );
         } else {
 

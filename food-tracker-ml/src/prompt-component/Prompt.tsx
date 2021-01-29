@@ -6,10 +6,11 @@ export interface IPromptProps {
     description: JSX.Element;
     buttonText?: string;
     onButtonClicked?: () => void;
+    imageAlt?:string;
     imageUrl?: string;
 }
 const Prompt: React.FunctionComponent<IPromptProps> = (props) => {
-    const { title, description, buttonText, onButtonClicked, imageUrl } = props;
+    const { title, description, buttonText, onButtonClicked, imageUrl, imageAlt } = props;
 
     const buttonElement = (buttonText && onButtonClicked) ?
         (<div className="prompt-button-row">
@@ -20,8 +21,8 @@ const Prompt: React.FunctionComponent<IPromptProps> = (props) => {
             </span>
         </div>) : undefined;
 
-    const imageElement = imageUrl ?
-    (<img src={imageUrl} className="prompt-image" />): undefined;
+    const imageElement = (imageUrl && imageAlt) ?
+    (<img alt={imageAlt} src={imageUrl} className="prompt-image" />): undefined;
     return (
         <div className="prompt-container">
             <div className="prompt-panel">
