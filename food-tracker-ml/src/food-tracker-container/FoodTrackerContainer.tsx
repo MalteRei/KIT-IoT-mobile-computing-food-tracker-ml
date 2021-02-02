@@ -18,8 +18,9 @@ const FoodTrackerContainer: React.FunctionComponent = (props) => {
 
     return(
         <main>
-            <CameraStream onCameraStreamEnabled={handleCameraStreamEnabled} />
             <CameraFeed cameraStream={cameraStream} onVideoStreamAvailable={handleVideoFeedAvailable}/>
+
+            <CameraStream onCameraStreamEnabled={handleCameraStreamEnabled} />
             <VideoPrediction videoElementToPredict={cameraFeedVideoElement}/>
         </main>
     );

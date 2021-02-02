@@ -1,0 +1,17 @@
+.camera-feed{
+  min-width: 100%;
+  min-height: 100%;
+
+
+}
+
+
+.camera-feed-container{
+    width: 98vw;
+    height: 98vh;
+    top: 1vh;
+    left: 1vw;
+    position: absolute;
+    border-radius: 32px;
+    overflow: hidden;
+}

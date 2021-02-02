@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-
+import './CameraFeed.css';
 
 export interface ICameraFeedProps{
     cameraStream: MediaStream | undefined,
@@ -20,7 +20,11 @@ const CameraFeed: React.FunctionComponent<ICameraFeedProps> = (props) => {
 
       
     return(
-        <video ref={videoRef} muted={true} autoPlay={true}></video>       
+        <div className="camera-feed-container">
+            <video className="camera-feed" ref={videoRef} muted={true} autoPlay={true}></video>      
+        </div>
+                     
+
     );
 }
 
