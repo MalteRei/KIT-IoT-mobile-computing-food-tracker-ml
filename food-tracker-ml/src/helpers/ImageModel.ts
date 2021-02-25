@@ -1,4 +1,5 @@
 import * as tf from '@tensorflow/tfjs';
+import IPrediction from '../models/IPrediction';
 //import { readFileSync } from 'fs';
 class ImageModel {
 
@@ -76,18 +77,64 @@ class ImageModel {
         return (this.model !== undefined);
     }
 
+    public predictWithHighestConfidence(toPredict: tf.Tensor3D | ImageData | HTMLImageElement | HTMLCanvasElement |
+        HTMLVideoElement): IPrediction | undefined {
+            if(!this.classes) {
+                throw Error("classes for model not defined");
+            }
+            const result = this.predictWithTensorTranformation(toPredict);
+            if(!result) {
+                return undefined;
+            }
+            let max = 0;
+            let maxIndex = 0;
+            for (let index = 0; index < result.length; index++) {
+                const element = result[index];
+                if(element > max) {
+                    max = element;
+                    maxIndex = index;
+                }
+            }
+            return {
+                label: this.classes[maxIndex],
+                confidence: max
+            }
+
+        }
+
     public predict(toPredict: tf.Tensor3D | ImageData | HTMLImageElement | HTMLCanvasElement |
         HTMLVideoElement) {
-        const tensorToPredict = tf.tidy(() => {
-            if (!(toPredict instanceof tf.Tensor)) {
-                return tf.browser.fromPixels(toPredict);
-            } else {
-                return toPredict;
-            }
-        });
-        const result = this.predictTensor(tensorToPredict);
-        tensorToPredict.dispose();
-        return result;
+        const result = this.predictWithTensorTranformation(toPredict);
+        if(result) {
+            return {
+            [this.outputKey]: this.classes?.map((classLabel, index) => ({
+                label: classLabel,
+                confidence: result[index]
+            } as IPrediction))
+            
+           /* this.classes?.reduce(
+                (acc, class_, idx) => {
+                    return { [class_]: resultsArray[idx], ...acc }
+                }, {}
+            )*/
+        }
+        }
+        return undefined;
+        
+    }
+
+    private predictWithTensorTranformation(toPredict: tf.Tensor3D | ImageData | HTMLImageElement | HTMLCanvasElement |
+        HTMLVideoElement) {
+            const tensorToPredict = tf.tidy(() => {
+                if (!(toPredict instanceof tf.Tensor)) {
+                    return tf.browser.fromPixels(toPredict);
+                } else {
+                    return toPredict;
+                }
+            });
+            const result = this.predictTensor(tensorToPredict);
+            tensorToPredict.dispose();
+            return result;
     }
     private predictTensor(image: tf.Tensor) {
         /*
@@ -120,15 +167,9 @@ class ImageModel {
             const results = this.model.execute(
                 { [this.signature.inputs.Image.name]: croppedImage }, this.outputName
             ) as tf.Tensor;
-            const resultsArray = results.dataSync();
-            console.dir(resultsArray);
-            return {
-                [this.outputKey]: this.classes?.reduce(
-                    (acc, class_, idx) => {
-                        return { [class_]: resultsArray[idx], ...acc }
-                    }, {}
-                )
-            }
+            return results.dataSync();
+
+            
         } else {
             console.error("Model not loaded, please await this.load() first.");
         }

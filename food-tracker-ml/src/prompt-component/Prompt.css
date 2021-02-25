@@ -47,12 +47,7 @@
     overflow-y: auto;
 }
 
-.prompt-button-row{
-    display: flex;
-    flex-direction: column;
-    text-align: right;
-    margin-top: 16px;
-}
+
 
 button{
     margin-right: 0;

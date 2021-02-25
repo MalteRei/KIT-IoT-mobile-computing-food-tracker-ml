@@ -11,7 +11,7 @@
     height: 98vh;
     top: 1vh;
     left: 1vw;
-    position: absolute;
+    position: fixed;
     border-radius: 32px;
     overflow: hidden;
 }

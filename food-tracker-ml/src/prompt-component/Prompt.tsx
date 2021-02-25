@@ -1,53 +1,66 @@
 import React from 'react';
+import ButtonRowComponent from '../button-row-component/ButtonRowComponent';
+import TwoPanePrompt from '../two-pane-prompt-component/TwoPanePrompt';
 import './Prompt.css';
 
 export interface IPromptProps {
     title: string;
-    description: JSX.Element;
+    description?: JSX.Element;
     buttonText?: string;
     onButtonClicked?: () => void;
-    imageAlt?:string;
+    imageAlt?: string;
     imageUrl?: string;
 }
 const Prompt: React.FunctionComponent<IPromptProps> = (props) => {
-    const { title, description, buttonText, onButtonClicked, imageUrl, imageAlt } = props;
+    const { title, description, buttonText, onButtonClicked, imageUrl, imageAlt, children } = props;
+    let mainPromptContent = null;
+    if (description) {
+        if (children) {
+            mainPromptContent = (
+                <div>
+                    {description}
+                    {children}
+                </div>
+            );
+        } else {
+            mainPromptContent = (
+                <div>
+                    {description}
+                </div>
+            );
+        }
+    } else if (children) {
+        mainPromptContent = (
+            <div>
+                {children}
+            </div>
+        );
+    }
+
 
     const buttonElement = (buttonText && onButtonClicked) ?
-        (<div className="prompt-button-row">
-            <span>
-                <button onClick={onButtonClicked}>
-                    {buttonText }
-                </button>
-            </span>
-        </div>) : undefined;
+        (<ButtonRowComponent>
+            <button onClick={onButtonClicked}>
+                {buttonText}
+            </button>
+        </ButtonRowComponent>) : undefined;
+
+    const mainPromptContainer = <div className="prompt-text-container">
+        <h1>
+            {title}
+        </h1>
+        {mainPromptContent}
+        {buttonElement}
+    </div>;
 
     const imageElement = (imageUrl && imageAlt) ?
-    (<img alt={imageAlt} src={imageUrl} className="prompt-image" />): undefined;
+        (<div className="prompt-image-container"><img alt={imageAlt} src={imageUrl} className="prompt-image" /></div>) : undefined;
+    
+    const promptContent = (imageElement) ? [imageElement, mainPromptContainer] : [mainPromptContainer];
     return (
-        <div className="prompt-container">
-            <div className="prompt-panel">
-                <div className="prompt-image-container">
-                    {imageElement}
-
-                </div>
-                <div className="prompt-text-container">
-
-
-                    <h1>
-                        {title}
-                        
-                        </h1>
-                    
-                       {description}
-                        
-
-                    {buttonElement}
-
-
-                </div>
-            </div>
-
-        </div>
+        <TwoPanePrompt>
+            {promptContent}
+        </TwoPanePrompt>
     );
 }
 

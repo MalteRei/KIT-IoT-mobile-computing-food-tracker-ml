@@ -1,50 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import FoodPredictionResult from '../food-prediction-result-component/FoodPredictionResult';
 import ImageModel from '../helpers/ImageModel';
+import IPrediction from '../models/IPrediction';
+import Prompt from '../prompt-component/Prompt';
 
 export interface IImageModelProps {
-    videoElementToPredict: HTMLVideoElement | undefined
+    videoElementToPredict: HTMLVideoElement | undefined,
+    model: ImageModel
 }
 const VideoPrediction: React.FunctionComponent<IImageModelProps> = (props) => {
-    const { videoElementToPredict } = props;
-    const [model, setModel] = useState<ImageModel | undefined>(undefined);
+    const { videoElementToPredict, model } = props;
+    const [currentPrediction, setCurrentPrediction] = useState<IPrediction | undefined>(undefined);
 
-    const loadModel = () => {
-        if (!model) {
-            const newModel = new ImageModel("https://foodtrackerstorage.z1.web.core.windows.net/model","signature.json");
-            newModel.load()
-                .then(() => {
-                    setModel(newModel);
-                }).catch((err) => {
-                    //TODO handle error
-                    console.error("error loading model");
-                    console.dir(err);
-                }
-                );
-        }
-    };
-
-    const cleanUpModel = () => {
-        if (model) {
-            model.dispose();
-            setModel(undefined);
-        }
-    };
-    useEffect(() => {
-        loadModel();
-        return cleanUpModel;
-    });
-
+   
    
 
 
 
-    if (!model || !model.isLoaded()) {
-        return (
-            <h2>
-                Model loading ...
-            </h2>
-        );
-    }
+   
     if(!videoElementToPredict){
         return (
             <h2>
@@ -57,19 +30,23 @@ const VideoPrediction: React.FunctionComponent<IImageModelProps> = (props) => {
     const predictVideo = () => {
        // console.log("predict video");
         if(videoElementToPredict) {
-        //console.dir(model.predict(videoElementToPredict.current));
-        model.predict(videoElementToPredict)
+        const prediction = model.predictWithHighestConfidence(videoElementToPredict);
+        if(prediction) {
+            setCurrentPrediction(prediction);
+        }
+        //model.predict(videoElementToPredict)
          // Call this function again to keep predicting when the browser is ready.
         }
         window.requestAnimationFrame(predictVideo);
     }
-    if(videoElementToPredict){
+    if(videoElementToPredict && !currentPrediction){
         predictVideo();
 
     }
     
     return (
-        <p>Prediction running.</p>
+        <FoodPredictionResult currentPrediction={currentPrediction}/>
+
     );
 
 
