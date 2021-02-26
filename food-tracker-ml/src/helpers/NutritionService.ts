@@ -16,8 +16,15 @@ export default class NutritionService{
                     fat: 33.8,
                     carbohydrates:9.6,
                     protein: 3.7
-                }
-        
+                };
+            case "almond":
+                return {
+                    kiloCalories: 611,
+                    kiloJoule: 2558,
+                    fat: 53,
+                    carbohydrates:5.7,
+                    protein: 24
+                };
             default:
                 return undefined;
         }

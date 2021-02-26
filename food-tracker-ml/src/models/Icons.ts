@@ -1,5 +1,7 @@
 enum Icons{
-    Dismiss
+    Dismiss,
+    Checkmark,
+    Add
 }
 
 export default Icons;

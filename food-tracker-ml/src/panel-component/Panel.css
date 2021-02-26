@@ -1,0 +1,9 @@
+.panel{
+    background-color: var(--color-background);
+    border-radius: 8px;
+    
+    overflow: auto;
+    padding: 16px;
+    height: 100%;
+    width: 100%;
+}

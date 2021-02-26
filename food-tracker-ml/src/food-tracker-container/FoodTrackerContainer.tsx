@@ -1,6 +1,7 @@
 import React, { useState} from 'react';
 import CameraFeed from '../camera-feed-component/CameraFeed';
 import CameraStream from '../camera-stream-component/CameraStream';
+import FoodDiaryContainer from '../food-dairy-container-component/FoodDiaryContainer';
 import FoodPredictionResult from '../food-prediction-result-component/FoodPredictionResult';
 import ImageModelContainer from '../image-model-container/ImageModelContainer';
 import IPrediction from '../models/IPrediction';
@@ -24,6 +25,7 @@ const FoodTrackerContainer: React.FunctionComponent = (props) => {
         <main>
             <CameraFeed cameraStream={cameraStream} onVideoStreamAvailable={handleVideoFeedAvailable}/>
             <ImageModelContainer videoElementToPredict={cameraFeedVideoElement}/>
+            <FoodDiaryContainer/>
             <CameraStream onCameraStreamEnabled={handleCameraStreamEnabled} />
 
         </main>

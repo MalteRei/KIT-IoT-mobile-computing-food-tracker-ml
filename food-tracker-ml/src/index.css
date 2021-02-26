@@ -233,3 +233,31 @@ button:hover{
   border-color: var(--color-primary-darker);
 
 }
+
+input{
+  -webkit-font-smoothing: antialiased;
+  box-shadow: none;
+  margin: 0px;
+  padding: 0px 8px;
+  border-radius: 0px;
+  border: none;
+  background: none transparent;
+  color: var(--color-text-default);
+  width: 100%;
+  min-width: 0px;
+  text-overflow: ellipsis;
+  outline: 0px;
+  line-height: normal;
+  height: 32px;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  position: relative;
+  box-shadow: none;
+    border: 1px solid var(--color-text-secondary);
+    border-radius: 2px;
+}
+
+input[type=number]{
+  max-width: 128px;
+}
