@@ -1,0 +1,11 @@
+.date-switcher-container{
+    display: flex;
+    margin-top: 16px;
+    justify-content: space-between;
+}
+
+.date-input{
+    margin: 0;
+    margin-left: 16px;
+    margin-right: 16px;
+}

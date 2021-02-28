@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ButtonRowComponent from '../button-row-component/ButtonRowComponent';
+import DateSwitcher from '../date-switcher-component/DateSwitcher';
 import DayNutritionStatistic from '../day-nutrition-statistic-component/DayNutritionStatistic';
 import FoodNutritionList from '../food-nutrition-list-component/FoodNutritionList';
 import FoodDiaryService from '../helpers/FoodDiaryService';
@@ -21,44 +22,60 @@ const FoodDiaryContainer: React.FunctionComponent = (props) => {
     const [showDiary, setShowDiary] = useState<boolean>(false);
     const [currentDate, setCurrentDate] = useState<Date>(new Date());
     const [foodEatenOnCurrentDate, setFoodEatenOnCurrentDate] = useState<(IFoodDiaryEntry & INutritionalValue)[] | null>(null);
+    let oldestDateInDiary = foodDiaryService.getOldestDateOfFoodDiary();
+    if(!oldestDateInDiary) {
+        oldestDateInDiary = new Date();
+    }
+    useEffect(() => setFoodForCurrentDate(), [currentDate, showDiary]);
+
+    const setFoodForCurrentDate = () => {
+        const foodForCurrentDate = getFoodForCurrentDate();
+        if(foodForCurrentDate) { 
+            setFoodEatenOnCurrentDate(getNutritionalValuesForFoods(foodForCurrentDate));
+        }
+    }
     const handleToggleShowDiary = () => {
         setShowDiary(!showDiary);
     }
     const getFoodForCurrentDate = () => {
-        if(foodDiaryService.isAvailable()) {
-          return foodDiaryService.getFoodsOfDay(currentDate);
-
+        if (foodDiaryService.isAvailable()) {
+            return foodDiaryService.getFoodsOfDay(currentDate);
         }
-        return [];
+        return null;
     }
     const getNutritionalValuesForFoods = (foods: IFoodDiaryEntry[]) => {
         return foods.map(food => {
             const nutritionValue = nutritionService.getNutritionalValueOf(food.foodName);
-            if(nutritionValue !== undefined){
-                return {...food, ...nutritionValue};
+            if (nutritionValue !== undefined) {
+                return { ...food, ...nutritionValue };
             } else {
-                return {...food, protein: Number.NaN, carbohydrates: Number.NaN, fat: Number.NaN, kiloCalories: Number.NaN, kiloJoule: Number.NaN}
+                return { ...food, protein: Number.NaN, carbohydrates: Number.NaN, fat: Number.NaN, kiloCalories: Number.NaN, kiloJoule: Number.NaN }
             }
         })
     }
-    useEffect(() => {
-        const foodForCurrentDate = getFoodForCurrentDate();
-        setFoodEatenOnCurrentDate(getNutritionalValuesForFoods(foodForCurrentDate));
-    },[currentDate, showDiary]);
+
+    const handleCheckDateInDiary = (date: Date): boolean => {
+        return foodDiaryService.isDateInDiary(date);
+    }
+    
+    const handleDateSwitcher = (newDate: Date) => {
+        setCurrentDate(newDate);
+        setFoodForCurrentDate();
+    }
 
     let diaryPanelContent: JSX.Element | undefined = undefined;
-    if(foodDiaryService.isAvailable()) {
+    if (foodDiaryService.isAvailable()) {
         // show food for current date
-        if(foodEatenOnCurrentDate) {
-            if(foodEatenOnCurrentDate.length > 0) {
+        if (foodEatenOnCurrentDate) {
+            if (foodEatenOnCurrentDate.length > 0) {
                 // display nutrition values for the day
                 diaryPanelContent = (
                     <Tabs>
                         <TabItem label="Statistics">
-                            <DayNutritionStatistic foodsEatenOnDay={foodEatenOnCurrentDate}/>
+                            <DayNutritionStatistic foodsEatenOnDay={foodEatenOnCurrentDate} />
                         </TabItem>
                         <TabItem label="Foods">
-                            <FoodNutritionList foodsWithNutrition={foodEatenOnCurrentDate}/>
+                            <FoodNutritionList foodsWithNutrition={foodEatenOnCurrentDate} />
                         </TabItem>
                     </Tabs>
                 );
@@ -79,29 +96,29 @@ const FoodDiaryContainer: React.FunctionComponent = (props) => {
         </p>);
     }
 
-    const diaryPanel = showDiary? (
+    const diaryPanel = showDiary ? (
         <div className="food-diary-panel">
-             <Panel>
+            <Panel>
 
-             <PanelTopRow title={currentDate.toLocaleDateString()}>
-                <IconButton onClick={handleToggleShowDiary} icon={Icons.Dismiss} />
-            </PanelTopRow>
-            {diaryPanelContent}
-        </Panel>
+                <PanelTopRow onClosePanel={handleToggleShowDiary}>
+                    <DateSwitcher onDateSwitched={handleDateSwitcher} isDateSelectable={handleCheckDateInDiary} oldestDateSelectable={oldestDateInDiary} startDate={currentDate}/>
+                </PanelTopRow>
+                {diaryPanelContent}
+            </Panel>
         </div>
-       
+
     ) : undefined;
 
-    const toggleDiaryButton = showDiary? undefined :  <div className="bottom-row">
-    <RoundIconButton onClick={handleToggleShowDiary} icon={Icons.Add}/>
+    const toggleDiaryButton = showDiary ? undefined : <div className="bottom-row">
+        <RoundIconButton onClick={handleToggleShowDiary} icon={Icons.Add} />
 
     </div>;
-    return(
+    return (
         <TwoPanePrompt leftPaneChildrenIndex={0}>
-            <section className="food-diary"> 
-            {diaryPanel}
-            {toggleDiaryButton}
-            
+            <section className="food-diary">
+                {diaryPanel}
+                {toggleDiaryButton}
+
             </section>
         </TwoPanePrompt>
     )

@@ -47,9 +47,7 @@ const NutritionPanel: React.FunctionComponent<INutritionPanelProps> = (props) =>
     return (
         <section className="nutrition-container">
             <Panel>
-                <PanelTopRow title={foodToShowNutritionOf}>
-                    <IconButton onClick={() => onDismissed()} icon={Icons.Dismiss} />
-                </PanelTopRow>
+                <PanelTopRow onClosePanel={onDismissed} title={foodToShowNutritionOf}></PanelTopRow>
                 
               
                 <h4>Calories</h4>
