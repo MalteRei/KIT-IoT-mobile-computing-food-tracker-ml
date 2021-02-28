@@ -1,15 +1,5 @@
-.tab-label {
-    display: inline-block;
-    list-style: none;
-    margin-bottom: -1px;
-    padding: 0.5rem 0.75rem;
-    position: relative;
-    color: var(--color-text-secondary);
-    margin-right: 8px;
-  }
+
   .tab-label:hover{
-    color: var(--color-text-primary);
-    background-color: var(--color-foreground-transparent);
     cursor: pointer;
   }
   

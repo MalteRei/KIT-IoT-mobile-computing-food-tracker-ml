@@ -10,7 +10,7 @@ body {
 
 :root {
   --color-primary:  rgb(0, 120, 212);;
-  --color-primary-darker: rgb(5, 8, 10);
+  --color-primary-darker: rgb(16, 110, 190);
   --color-primary-dark: rgb(0, 90, 158);
   --color-pink: #f5317f;
   --color-light-blue: #15EDED;
@@ -265,4 +265,19 @@ input{
 
 input[type=number]{
   max-width: 128px;
+}
+
+.list-item-no-style{
+  display: inline-block;
+  list-style: none;
+  margin-bottom: -1px;
+  padding: 0.5rem 0.75rem;
+  position: relative;
+  color: var(--color-text-secondary);
+  margin-right: 8px;
+}
+
+.list-item-no-style:hover{
+  color: var(--color-text-primary);
+    background-color: var(--color-foreground-transparent);
 }

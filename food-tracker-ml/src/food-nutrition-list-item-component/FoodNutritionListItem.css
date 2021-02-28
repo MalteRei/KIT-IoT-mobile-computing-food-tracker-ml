@@ -1,0 +1,11 @@
+.food-list-item{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    border: none;
+    align-items: baseline;
+}
+
+.border-bottom{
+    border-bottom: 1px, solid, var(--color-text-secondary);
+}

@@ -8,7 +8,7 @@ export interface ITabProps {
 }
 const Tab: React.FunctionComponent<ITabProps> = (props) => {
     const {isActive, onClick, label} = props;
-    let className = 'tab-label';
+    let className = 'list-item-no-style tab-label';
     if(isActive) {
         className += ' tab-active';
     }

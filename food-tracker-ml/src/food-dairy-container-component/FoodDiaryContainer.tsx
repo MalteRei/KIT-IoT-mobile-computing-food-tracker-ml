@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ButtonRowComponent from '../button-row-component/ButtonRowComponent';
 import DayNutritionStatistic from '../day-nutrition-statistic-component/DayNutritionStatistic';
+import FoodNutritionList from '../food-nutrition-list-component/FoodNutritionList';
 import FoodDiaryService from '../helpers/FoodDiaryService';
 import NutritionService, { INutritionalValue } from '../helpers/NutritionService';
 import IconButton from '../icon-button-component/IconButton';
@@ -56,8 +57,8 @@ const FoodDiaryContainer: React.FunctionComponent = (props) => {
                         <TabItem label="Statistics">
                             <DayNutritionStatistic foodsEatenOnDay={foodEatenOnCurrentDate}/>
                         </TabItem>
-                        <TabItem label="Tab 1">
-                            Tab content 2
+                        <TabItem label="Foods">
+                            <FoodNutritionList foodsWithNutrition={foodEatenOnCurrentDate}/>
                         </TabItem>
                     </Tabs>
                 );
