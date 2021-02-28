@@ -1,6 +1,5 @@
 import React from 'react';
 import CirclePiePiece from '../circle-pie-piece-component/CirclePiePiece';
-import PiePiece from '../pie-piece-component/PiePiece';
 import './CircularPieChart.css';
 
 export interface IPiePiece{
@@ -27,9 +26,9 @@ const CircularPieChart: React.FunctionComponent<ICircularPieChartProps> = (props
         </header>
         <section className="dials">
             <div className="dial-background"></div>
-            <PiePiece color="#32cbd4" piePieceIndex={2} startDegree={260} endDegree={360}/>
-            <PiePiece color="#9cfc33" piePieceIndex={1} startDegree={220} endDegree={260}/>
-            <PiePiece color="#fc1d20" piePieceIndex={0} startDegree={0} endDegree={220}/>
+            <CirclePiePiece  color="#32cbd4" piePieceIndex={2}lengthInDegree={360} />
+            <CirclePiePiece  color="#9cfc33" piePieceIndex={1}lengthInDegree={260} />
+            <CirclePiePiece  color="#fc1d20" piePieceIndex={0}lengthInDegree={220} />
 
         </section>
         
