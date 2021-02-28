@@ -28,7 +28,7 @@ class FoodDiaryService {
                 }
               
             } 
-            localStorage.setItem(todayDateString, foodsWithNewFood.toString());
+            localStorage.setItem(todayDateString, JSON.stringify(foodsWithNewFood));
             
         }
     }
@@ -38,6 +38,7 @@ class FoodDiaryService {
             const dateString = day.toDateString();
             const existingFoodsString = localStorage.getItem(dateString);
             if(existingFoodsString !== null) {
+                console.dir(existingFoodsString);
                 const exisitingFoods = JSON.parse(existingFoodsString) as IFoodDiaryEntry[];
                 if(exisitingFoods && exisitingFoods.length > 0) {
                     return exisitingFoods;

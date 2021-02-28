@@ -1,0 +1,9 @@
+.tabs-header {  
+    
+    padding-left: 0;
+}
+
+.tab-content {
+    max-height: 100%;
+    overflow-y: auto;
+}

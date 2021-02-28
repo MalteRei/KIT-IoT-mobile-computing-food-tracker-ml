@@ -1,0 +1,73 @@
+.dial {
+    border-radius: 50%;
+    position: absolute;
+    width: 8em;
+    height: 8em;
+  }
+   .dial::before {
+    background-size: 50%;
+    content: "";
+    width: 1.5em;
+    height: 1.5em;
+    position: absolute;
+    top: -0.29em;
+    left: calc(50% - 0.75em);
+    z-index: 10;
+  }
+   .dial::after {
+    content: "";
+  background: var(--color-background);
+    border-radius: 50%;
+    width: 6em;
+    height: 6em;
+    position: absolute;
+    top: 1em;
+    left: 1em;
+  }
+   .dial .dial-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 4em;
+    overflow: hidden;
+  }
+   .dial .wedge {
+    width: 4em;
+    height: 8em;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+   .dial .container1 {
+    left: 4em;
+  }
+   .dial .container1 .wedge {
+    /*-webkit-animation: rotate-bg-dial-1-1 5s 0.2s linear infinite;
+            animation: rotate-bg-dial-1-1 5s 0.2s linear infinite;*/
+  border-radius: 8em 0 0 8em;
+    left: -4em;
+    transform-origin: 100% 50%;
+  }
+   .dial .container2 {
+    left: 0;
+  }
+   .dial .container2 .wedge {
+   /*-webkit-animation: rotate-bg-dial-1-2 5s 0.2s linear infinite;
+            animation: rotate-bg-dial-1-2 5s 0.2s linear infinite;*/
+    border-radius: 0 8em 8em 0; 
+    transform-origin: 0% 50%;
+    left: 4em;
+  }
+   .dial .marker {
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: calc(50% - 0.5em);
+  }
+   .dial .end {
+    /*-webkit-animation: rotate-marker-dial-1 5s 0.2s linear infinite;
+            animation: rotate-marker-dial-1 5s 0.2s linear infinite;*/
+    transform-origin: 50% 4em;
+  }

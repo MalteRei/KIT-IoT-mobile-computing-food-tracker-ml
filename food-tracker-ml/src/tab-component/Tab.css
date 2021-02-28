@@ -1,0 +1,43 @@
+.tab-label {
+    display: inline-block;
+    list-style: none;
+    margin-bottom: -1px;
+    padding: 0.5rem 0.75rem;
+    position: relative;
+    color: var(--color-text-secondary);
+    margin-right: 8px;
+  }
+  .tab-label:hover{
+    color: var(--color-text-primary);
+    background-color: var(--color-foreground-transparent);
+    cursor: pointer;
+  }
+  
+  .tab-active {
+    background-color: transparent;
+    color: var(--color-text-primary)!important;
+  }
+ .tab-active::before{
+    background-color: var(--color-primary);
+    bottom: 0px;
+    content: "";
+    height: 2px;
+    left: 8px;
+    position: absolute;
+    right: 8px;
+    transition: left 0.267s cubic-bezier(0.1, 0.25, 0.75, 0.9) 0s, right 0.267s cubic-bezier(0.1, 0.25, 0.75, 0.9) 0s;
+}
+
+.tab-active::after{
+    color: transparent;
+    display: block;
+    font-weight: 700;
+    height: 1px;
+    overflow: hidden;
+    visibility: hidden;
+}
+
+.tab-active:hover::before {
+    left: 0px;
+    right: 0px;
+}
