@@ -46,12 +46,12 @@ jobs:
       
     - name: Install Dependencies 📦
       run: |
-        cd food-tracker-ml
+        cd food-tracker-app
         npm install
 
     - name: Build 🔨
       run: |
-        cd food-tracker-ml
+        cd food-tracker-app
         npm run build
 
     - name: Azure Login 🔑
@@ -64,7 +64,7 @@ jobs:
       with:
         azcliversion: 2.0.72
         inlineScript: |
-            az storage blob upload-batch --account-name foodtrackerstorage -d '$web' -s ./food-tracker-ml/build
+            az storage blob upload-batch --account-name foodtrackerstorage -d '$web' -s ./food-tracker-app/build
     
   # Azure logout 
     - name: logout
