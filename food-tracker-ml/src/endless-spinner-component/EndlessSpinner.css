@@ -1,0 +1,30 @@
+.spinner-circle{
+    border-radius: 50%;
+    border-width: 1.5px;
+    border-style: solid;
+    border-color: var(--color-primary) var(--color-foreground) var(--color-foreground);
+    border-image: initial;
+    animation-delay: 0ms;
+    animation-name: spinner-rotation;
+    animation-duration: 1.3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(0.53, 0.21, 0.29, 0.67);
+    width: 28px;
+    height: 28px;
+}
+
+.spinner-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+@keyframes spinner-rotation {
+    from {
+        transform: rotate(0)
+    }
+
+    to {
+        transform: rotate(360deg)
+    }
+}

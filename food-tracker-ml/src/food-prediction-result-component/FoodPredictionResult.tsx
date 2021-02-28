@@ -13,14 +13,15 @@ const FoodPredictionResult: React.FunctionComponent<IFoodPredictionResult> = (pr
     const [selectedFood, setSelectedFood] = useState<string | undefined>(undefined);
 
     const handleFoodSelected = (selectedFood: string | undefined) => {
-        console.dir(selectedFood);
         setSelectedFood(selectedFood);
     };
 
+
     const currentPredictionCard = (currentPrediction !== undefined) ? <div className="prediction-card" onClick={() => handleFoodSelected(currentPrediction.label)}>
-        <h5>
+       <h5 style={{marginLeft: '16px'}}>
             {currentPrediction.label}
         </h5>
+        
     </div> : undefined;
     const nutritionPanel = (selectedFood !== undefined) ? <NutritionPanel onDismissed={() => handleFoodSelected(undefined)} foodToShowNutritionOf={selectedFood} /> : undefined;
 

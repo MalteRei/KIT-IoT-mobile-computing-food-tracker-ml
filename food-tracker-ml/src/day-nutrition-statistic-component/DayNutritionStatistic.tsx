@@ -18,20 +18,21 @@ const DayNutritionStatistic: React.FunctionComponent<IDayNutritionStatistic> = (
         );
     }
     const nutritionValuesSumForDay = foodsEatenOnDay.reduce<INutritionalValue>((previousValue, currentValue) => {
+        const amountFactor = currentValue.amountInGramm / 100;
         if (!isNaN(currentValue.protein)) {
-            previousValue.protein += currentValue.protein;
+            previousValue.protein += currentValue.protein * amountFactor;
         }
         if (!isNaN(currentValue.carbohydrates)) {
-            previousValue.carbohydrates += currentValue.carbohydrates;
+            previousValue.carbohydrates += currentValue.carbohydrates * amountFactor;
         }
         if (!isNaN(currentValue.fat)) {
-            previousValue.fat += currentValue.fat;
+            previousValue.fat += currentValue.fat * amountFactor;
         }
         if (!isNaN(currentValue.kiloCalories)) {
-            previousValue.kiloCalories += currentValue.kiloCalories;
+            previousValue.kiloCalories += currentValue.kiloCalories * amountFactor;
         }
         if (!isNaN(currentValue.kiloJoule)) {
-            previousValue.kiloJoule += currentValue.kiloJoule;
+            previousValue.kiloJoule += currentValue.kiloJoule * amountFactor;
         }
         return previousValue;
     }, { protein: 0, carbohydrates: 0, fat: 0, kiloCalories: 0, kiloJoule: 0 });

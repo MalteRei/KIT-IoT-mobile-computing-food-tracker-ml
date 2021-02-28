@@ -46,9 +46,9 @@ const Prompt: React.FunctionComponent<IPromptProps> = (props) => {
         </ButtonRowComponent>) : undefined;
 
     const mainPromptContainer = <div className="prompt-text-container">
-        <h1>
+        <h3>
             {title}
-        </h1>
+        </h3>
         {mainPromptContent}
         {buttonElement}
     </div>;

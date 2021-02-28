@@ -11,15 +11,15 @@
 
 .prediction-card{
     display: flex;
-    width: 50%;
-    justify-self: center;
-    align-self: center;
-    
-    margin-left: 15%;
-    margin-right: 65%;
+    width: 100%;
+    margin: 32px;
     background-color: var(--color-background);
     border-radius: 8px;
+    overflow: hidden;
+    height: 64px;
+    align-items: center;
 }
+
 
 .prediction-card:hover{
     cursor: pointer;

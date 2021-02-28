@@ -107,7 +107,7 @@ h1 {
   color: var(--color-text-default);
   font-family: var(--font-family);
   font-size: 2.625em;
-  line-height: 3.25em;
+  line-height: 2.8em;
   margin: 0;
 }
 
@@ -225,6 +225,11 @@ button{
     cursor: pointer;
     text-decoration: none;
     display: inline-block;
+    -webkit-transition: background-color 300ms ease-out;
+    -moz-transition: background-color 300ms ease-out;
+    -o-transition: background-color 300ms ease-out;
+    -ms-transition: background-color 300ms ease-out;
+    transition: background-color 300ms ease-out;
 }
 
 button:active{

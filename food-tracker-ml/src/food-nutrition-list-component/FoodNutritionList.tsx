@@ -10,7 +10,7 @@ export interface IFoodNutritionListProps{
 const FoodNutritionList: React.FunctionComponent<IFoodNutritionListProps> = (props) => {
     const {foodsWithNutrition} = props;
 
-    const listItems = foodsWithNutrition.map((foodWithNutrition, index) => <FoodNutritionListItem key={index} foodWithNutrition={foodWithNutrition}/>);
+    const listItems = foodsWithNutrition.map((foodWithNutrition, index) => <FoodNutritionListItem index={index} key={index} foodWithNutrition={foodWithNutrition}/>);
 
     return (
         <ol className='food-nutrition-list'>

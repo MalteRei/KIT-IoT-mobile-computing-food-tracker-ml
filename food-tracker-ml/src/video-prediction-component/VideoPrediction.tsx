@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import FoodPredictionResult from '../food-prediction-result-component/FoodPredictionResult';
 import ImageModel from '../helpers/ImageModel';
 import IPrediction from '../models/IPrediction';
-import Prompt from '../prompt-component/Prompt';
 
 export interface IImageModelProps {
     videoElementToPredict: HTMLVideoElement | undefined,
@@ -12,20 +11,10 @@ const VideoPrediction: React.FunctionComponent<IImageModelProps> = (props) => {
     const { videoElementToPredict, model } = props;
     const [currentPrediction, setCurrentPrediction] = useState<IPrediction | undefined>(undefined);
 
-   
-   
-
-
-
-   
     if(!videoElementToPredict){
-        return (
-            <h2>
-                Video element not yet there.
-            </h2>
-        )
+        return null;
     }
-
+    
 
     const predictVideo = () => {
        // console.log("predict video");
@@ -41,7 +30,6 @@ const VideoPrediction: React.FunctionComponent<IImageModelProps> = (props) => {
     }
     if(videoElementToPredict && !currentPrediction){
         predictVideo();
-
     }
     
     return (

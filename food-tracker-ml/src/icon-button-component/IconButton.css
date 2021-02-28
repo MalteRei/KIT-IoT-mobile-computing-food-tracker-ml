@@ -1,11 +1,6 @@
 .icon-button {
     background-color: transparent;
     border-style: none;
-    -webkit-transition: background-color 300ms ease-out;
-    -moz-transition: background-color 300ms ease-out;
-    -o-transition: background-color 300ms ease-out;
-    -ms-transition: background-color 300ms ease-out;
-    transition: background-color 300ms ease-out;
 }
 .icon-button:hover{
     background-color: var(--color-foreground);

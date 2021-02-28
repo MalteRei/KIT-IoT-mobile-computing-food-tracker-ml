@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import ButtonRowComponent from '../button-row-component/ButtonRowComponent';
 import DateSwitcher from '../date-switcher-component/DateSwitcher';
 import DayNutritionStatistic from '../day-nutrition-statistic-component/DayNutritionStatistic';
+import EndlessSpinner from '../endless-spinner-component/EndlessSpinner';
 import FoodNutritionList from '../food-nutrition-list-component/FoodNutritionList';
 import FoodDiaryService from '../helpers/FoodDiaryService';
 import NutritionService, { INutritionalValue } from '../helpers/NutritionService';
-import IconButton from '../icon-button-component/IconButton';
 import Icons from '../models/Icons';
 import IFoodDiaryEntry from '../models/IFoodDiaryEntry';
 import Panel from '../panel-component/Panel';
@@ -81,13 +80,13 @@ const FoodDiaryContainer: React.FunctionComponent = (props) => {
                 );
             } else {
                 // nothing eaten this day
-                diaryPanelContent = (<p>
+                diaryPanelContent = (<p style={{paddingTop: '16px'}}>
                     No food in diary for {currentDate.toLocaleDateString()}.<br></br><br></br>
                     Scan food with the camera, tap it and add it to today's food diary.
                 </p>);
             }
         } else {
-            // loading
+            diaryPanelContent = <EndlessSpinner/>;
         }
 
     } else {
@@ -99,7 +98,6 @@ const FoodDiaryContainer: React.FunctionComponent = (props) => {
     const diaryPanel = showDiary ? (
         <div className="food-diary-panel">
             <Panel>
-
                 <PanelTopRow onClosePanel={handleToggleShowDiary}>
                     <DateSwitcher onDateSwitched={handleDateSwitcher} isDateSelectable={handleCheckDateInDiary} oldestDateSelectable={oldestDateInDiary} startDate={currentDate}/>
                 </PanelTopRow>
@@ -110,7 +108,7 @@ const FoodDiaryContainer: React.FunctionComponent = (props) => {
     ) : undefined;
 
     const toggleDiaryButton = showDiary ? undefined : <div className="bottom-row">
-        <RoundIconButton onClick={handleToggleShowDiary} icon={Icons.Add} />
+        <RoundIconButton onClick={handleToggleShowDiary} icon={Icons.Notebook} />
 
     </div>;
     return (
@@ -118,7 +116,6 @@ const FoodDiaryContainer: React.FunctionComponent = (props) => {
             <section className="food-diary">
                 {diaryPanel}
                 {toggleDiaryButton}
-
             </section>
         </TwoPanePrompt>
     )

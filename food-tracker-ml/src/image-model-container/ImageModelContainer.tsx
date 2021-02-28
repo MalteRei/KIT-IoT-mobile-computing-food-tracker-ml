@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import EndlessSpinner from '../endless-spinner-component/EndlessSpinner';
 import ImageModel from '../helpers/ImageModel';
 import Prompt from '../prompt-component/Prompt';
 import VideoPrediction from '../video-prediction-component/VideoPrediction';
@@ -34,14 +35,19 @@ const ImageModelContainer: React.FunctionComponent<IImageModelContainerProps> = 
     useEffect(() => {
         loadModel();
         return cleanUpModel;
-    });
+    }, []);
 
     if (!model || !model.isLoaded()) {
+        const descriptionElement = (
+            <p>We need to download a machine learning model that can find food.
+                <br></br>
+                <EndlessSpinner/>
+            </p>
+        );
         return (
-            <Prompt title="Loading Model" description={<p>We need to download a machine learning model that can find food.</p>} />
+            <Prompt title="Loading Model" description={descriptionElement} />
         );
     }
-
     return(
         <VideoPrediction videoElementToPredict={videoElementToPredict} model={model}/>
     );

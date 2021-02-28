@@ -1,7 +1,10 @@
 enum Icons{
     Dismiss,
     Checkmark,
-    Add
+    Add,
+    ChevronRight,
+    ChevronLeft,
+    Notebook
 }
 
 export default Icons;

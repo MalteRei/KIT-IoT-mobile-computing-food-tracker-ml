@@ -37,32 +37,7 @@ class ImageModel {
         } else {
             throw Error("could not load model");
         }
-        /*
-        fetch(this.baseUrl + this.signatureFileName)
-            .then(signatureResponse => {
-                console.dir(signatureResponse);
-                console.log(signatureResponse.statusText);
-                signatureResponse.json()
-                    .then(async signatureJson => {
-                        console.dir(signatureJson);
-                        this.signature = signatureJson;
-                        this.modelPath = this.baseUrl + this.signature.filename;
-                        [this.width, this.height] = this.signature.inputs.Image.shape.slice(1, 3);
-                        this.outputName = this.signature.outputs[this.outputKey].name;
-                        this.classes = this.signature.classes.Label;
-                        tf.loadGraphModel(this.modelPath)
-                        .then(graphModel => this.model = graphModel)
-                        .catch(err => console.dir(err));
-                    })
-                    .catch(err => {
-                        console.dir(err);
-                        throw err;
-                    });
-            })
-            .catch(err => {
-                console.dir(err);
-                throw err;
-            });*/
+       
 
     }
 
@@ -170,9 +145,9 @@ class ImageModel {
             return results.dataSync();
 
             
-        } else {
+        } /*else {
             console.error("Model not loaded, please await this.load() first.");
-        }
+        }*/
     }
 }
 

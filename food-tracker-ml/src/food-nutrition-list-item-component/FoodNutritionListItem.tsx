@@ -6,11 +6,11 @@ import './FoodNutritionListItem.css';
 
 export interface IFoodNutritionListItemProps {
     foodWithNutrition: (IFoodDiaryEntry & INutritionalValue),
-    key:number
+    index:number
 }
 
 const FoodNutritionListItem: React.FunctionComponent<IFoodNutritionListItemProps> = (props) => {
-    const {foodWithNutrition, key} = props;
+    const {foodWithNutrition, index} = props;
 
     const amountFactor = foodWithNutrition.amountInGramm / 100;
     
@@ -23,7 +23,7 @@ const FoodNutritionListItem: React.FunctionComponent<IFoodNutritionListItemProps
     const carbohydrates = Math.round(foodWithNutrition.carbohydrates * amountFactor * roundDecimalPlace) / roundDecimalPlace;
     const protein = Math.round(foodWithNutrition.protein * amountFactor * roundDecimalPlace) / roundDecimalPlace;
 
-    const liClassNames = (key > 0)? "list-item-no-style food-list-item border-bottom": "list-item-no-style food-list-item";
+    const liClassNames = (index > 0)? "list-item-no-style food-list-item border-bottom": "list-item-no-style food-list-item";
     return (
         <li className={liClassNames}>
              <p style={{minWidth: '8%'}}>
@@ -35,8 +35,7 @@ const FoodNutritionListItem: React.FunctionComponent<IFoodNutritionListItemProps
             <LabelValue marginRight='32px' label='Calories' valueParentheses={`${kiloJoule} kJ`} value={`${kiloCalories} kcal`}/>
             <LabelValue marginRight='32px' label='Fats' value={`${fat} g`}/>
             <LabelValue marginRight='32px' label='Carbs' value={`${carbohydrates} g`}/>
-            <LabelValue marginRight='32px' label='Protein' value={`${protein} g`}/>
-            
+            <LabelValue marginRight='32px' label='Protein' value={`${protein} g`}/>         
         </li>
     )
 }

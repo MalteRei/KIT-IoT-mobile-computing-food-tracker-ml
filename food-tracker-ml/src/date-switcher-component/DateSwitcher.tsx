@@ -12,7 +12,6 @@ export interface IDateSwitcherProps {
 const DateSwitcher: React.FunctionComponent<IDateSwitcherProps> = (props) => {
     const {startDate, oldestDateSelectable, onDateSwitched, isDateSelectable} = props;
     const [currentDate, setCurrentDate] = useState<Date>(startDate);
- 
     const handleClickDateNext = (dateUpdate: (oldDateNumer: number) => number) => {
         let nextDateToTry = new Date(currentDate);
         let nextDateNumberToTry = nextDateToTry.getDate();
@@ -50,9 +49,9 @@ const DateSwitcher: React.FunctionComponent<IDateSwitcherProps> = (props) => {
     
     return (
         <div className="date-switcher-container">
-            <IconButton disabled={!oldestDateSelectable || currentDate <= oldestDateSelectable} icon={Icons.Checkmark} onClick={() => handleClickDateNext(oldDateNumber => oldDateNumber - 1)}/>
+            <IconButton disabled={!oldestDateSelectable || currentDate <= oldestDateSelectable} icon={Icons.ChevronLeft} onClick={() => handleClickDateNext(oldDateNumber => oldDateNumber - 1)}/>
             <input className="date-input" value={currentDate.toISOString().split('T')[0]} onChange={handleChangeDate} id={`date-switcher-${startDate.toISOString()}`} max={startDate.toISOString().split('T')[0]} min={oldestDateSelectable?.toISOString().split('T')[0]} type="date"/>
-            <IconButton disabled={currentDate >= startDate} icon={Icons.Checkmark} onClick={() => handleClickDateNext(oldDateNumber => oldDateNumber + 1)}/>
+            <IconButton disabled={currentDate >= startDate} icon={Icons.ChevronRight} onClick={() => handleClickDateNext(oldDateNumber => oldDateNumber + 1)}/>
         </div>
     )
 }

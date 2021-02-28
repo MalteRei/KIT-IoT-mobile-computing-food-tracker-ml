@@ -13,24 +13,35 @@ class FoodDiaryService {
             const today = new Date();
             const todayDateString = today.toISOString().split('T')[0];
             const existingFoodsString = localStorage.getItem(todayDateString);
-            let foodsWithNewFood: IFoodDiaryEntry[] = [];
-            foodsWithNewFood.push({
+            const newFood: IFoodDiaryEntry = {
                 foodName: foodName,
                 amountInGramm: amountInGramm
-            });
+            }
             if(existingFoodsString !== null) {
                 const exisitingFoods = JSON.parse(existingFoodsString) as IFoodDiaryEntry[];
                 if(exisitingFoods && exisitingFoods.length > 0) {
-                    foodsWithNewFood = exisitingFoods;
+                    
                     const existingFoodWithName = exisitingFoods.find(foodEntry => foodEntry.foodName === foodName);
                     if(existingFoodWithName) {
                         const amountOfFoodAddedUp = existingFoodWithName.amountInGramm + amountInGramm;
                         existingFoodWithName.amountInGramm = amountOfFoodAddedUp;
-                    } 
+                    } else {
+                        exisitingFoods.push({
+                            foodName: foodName,
+                            amountInGramm: amountInGramm
+                        });
+                    }
+                    console.dir(exisitingFoods);
+                    localStorage.setItem(todayDateString, JSON.stringify(exisitingFoods));
+                } else {
+                    localStorage.setItem(todayDateString, JSON.stringify([newFood]));
+
                 }
               
-            } 
-            localStorage.setItem(todayDateString, JSON.stringify(foodsWithNewFood));
+        } else {
+                    localStorage.setItem(todayDateString, JSON.stringify([newFood]));
+        }
+            
             this.updateOldestDate(today);
         }
     }
@@ -45,8 +56,8 @@ class FoodDiaryService {
     getOldestDateOfFoodDiary(): Date | undefined {
         const oldestDateInDiaryString = localStorage.getItem(this.oldestDateKeyInStorage);
         if(oldestDateInDiaryString) {
-            const oldestDateInDiary = JSON.parse(oldestDateInDiaryString) as Date;
-            return oldestDateInDiary;
+            const date = new Date(JSON.parse(oldestDateInDiaryString));
+            return date;
         }
         return undefined;
     }
@@ -61,7 +72,6 @@ class FoodDiaryService {
             const dateString = day.toISOString().split('T')[0];
             const existingFoodsString = localStorage.getItem(dateString);
             if(existingFoodsString !== null) {
-                console.dir(existingFoodsString);
                 const exisitingFoods = JSON.parse(existingFoodsString) as IFoodDiaryEntry[];
                 if(exisitingFoods && exisitingFoods.length > 0) {
                     return exisitingFoods;

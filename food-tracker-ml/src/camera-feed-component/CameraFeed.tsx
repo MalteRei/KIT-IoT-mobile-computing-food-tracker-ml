@@ -12,11 +12,24 @@ const CameraFeed: React.FunctionComponent<ICameraFeedProps> = (props) => {
 
     
     useEffect(() => {
+        const handleVideoLoadedData = () => {
+            if(videoRef.current) {
+                onVideoStreamAvailable(videoRef.current);
+            }
+        }
         if (cameraStream && videoRef && videoRef.current && !videoRef.current.srcObject) {
             videoRef.current.srcObject = cameraStream;
-            onVideoStreamAvailable(videoRef.current);
+
+            
+            const listener = videoRef.current.addEventListener("loadeddata", handleVideoLoadedData);
+
+           
+            
         }
-      });
+
+        return () => videoRef.current?.removeEventListener("loadeddata", handleVideoLoadedData);
+        
+      }, [cameraStream]);
 
       
     return(

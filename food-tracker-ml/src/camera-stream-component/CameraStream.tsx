@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import './CameraStream.css'
 
 import logo from '../assets/images/cartoon-camera-illustration_23-2147533355.jpg';
@@ -10,7 +10,7 @@ export interface ICameraStream {
 }
 const CameraStream: React.FunctionComponent<ICameraStream> = (props) => {
 
-    const { onCameraStreamEnabled } = props;
+    const { onCameraStreamEnabled, children } = props;
     const [cameraEnabled, setCameraEnabled] = useState(false);
     const [cameraError, setCameraError] = useState<MediaStreamError | undefined>(undefined);
 
@@ -41,22 +41,11 @@ const CameraStream: React.FunctionComponent<ICameraStream> = (props) => {
             });
     }
 
-    if (cameraError) {
-        return (
-            <div>
-                <h2>
-                    Something went wrong with the camera
-            </h2>
-                <button onClick={enableCamera}>
-                    Try again
-        </button>
-            </div>);
-    }
+    
 
     if (!cameraEnabled) {
         if (getUserMediaSupported()) {
-
-            const descriptionParagraph = (
+            let descriptionParagraph = (
                 <p>
                     The food tracker works by recognizing foods in the video stream you camera produces.
                 <br />
@@ -64,9 +53,19 @@ const CameraStream: React.FunctionComponent<ICameraStream> = (props) => {
                 <br />
                 To recognize food in your camera stream we use an object classification model. The model is downloaded to your device. No data leaves your device.
                 </p>
-            )
+            );
+            let buttonText = 'Enable Camera';
+
+            if (cameraError) {
+                descriptionParagraph = (
+                        <p>
+                            Something went wrong with the camera
+                    </p>);
+                    buttonText = 'Try again';
+            }
+            
             return (
-                <Prompt onButtonClicked={enableCamera} buttonText="Enable Camera" imageUrl={logo} imageAlt="Illustration of a camera." title="Please enable your webcame to use the food tracker!" description={descriptionParagraph}/>
+                <Prompt onButtonClicked={enableCamera} buttonText={buttonText} imageUrl={logo} imageAlt="Illustration of a camera." title="Please enable your webcame to use the food tracker!" description={descriptionParagraph}/>
             );
         } else {
 
@@ -75,13 +74,12 @@ const CameraStream: React.FunctionComponent<ICameraStream> = (props) => {
 
             return (
                 //TODO create own error component
-                <h1>Camera is not supported by your browser</h1>
+                <h3>Camera is not supported by your browser</h3>
             );
         }
     }
 
-    return null;
-
+   return children as ReactElement<any, any>;
 
 }
 

@@ -22,15 +22,23 @@ const NutritionPanel: React.FunctionComponent<INutritionPanelProps> = (props) =>
     const [amountFactor, setAmountFactor] = useState<number>(1);
 
     const nutritionalValues = nutritionService.getNutritionalValueOf(foodToShowNutritionOf);
+
     if(!nutritionalValues) {
+
         return (
-            <div>
-                <h1>Not found</h1>
+            <section className="nutrition-container">
+                <Panel>
+                    <PanelTopRow onClosePanel={onDismissed} title={foodToShowNutritionOf}></PanelTopRow>
+                    
+                  
+                    <h3>Not found</h3>
                 <p>Sorry, we could not look up the nutritional value for {foodToShowNutritionOf}.</p>
-            </div>
-            
-        )
-    }
+                    
+                </Panel>
+    
+            </section>
+        );
+    } 
 
     const roundDecimalPlace = 100;
    
@@ -40,10 +48,11 @@ const NutritionPanel: React.FunctionComponent<INutritionPanelProps> = (props) =>
     const carbohydrates = Math.round(nutritionalValues.carbohydrates * amountFactor * roundDecimalPlace) / roundDecimalPlace;
     const protein = Math.round(nutritionalValues.protein * amountFactor * roundDecimalPlace) / roundDecimalPlace;
     const handleAmountChange = (gramm: number) => {
-        console.dir(gramm);
         const newFactor = gramm/100;
         setAmountFactor(newFactor);
     }
+    
+
     return (
         <section className="nutrition-container">
             <Panel>
