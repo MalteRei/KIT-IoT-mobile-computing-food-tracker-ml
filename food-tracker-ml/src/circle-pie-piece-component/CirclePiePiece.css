@@ -42,8 +42,7 @@
     left: 4em;
   }
    .dial .container1 .wedge {
-    /*-webkit-animation: rotate-bg-dial-1-1 5s 0.2s linear infinite;
-            animation: rotate-bg-dial-1-1 5s 0.2s linear infinite;*/
+   
   border-radius: 8em 0 0 8em;
     left: -4em;
     transform-origin: 100% 50%;
@@ -52,8 +51,7 @@
     left: 0;
   }
    .dial .container2 .wedge {
-   /*-webkit-animation: rotate-bg-dial-1-2 5s 0.2s linear infinite;
-            animation: rotate-bg-dial-1-2 5s 0.2s linear infinite;*/
+ 
     border-radius: 0 8em 8em 0; 
     transform-origin: 0% 50%;
     left: 4em;
@@ -67,7 +65,5 @@
     left: calc(50% - 0.5em);
   }
    .dial .end {
-    /*-webkit-animation: rotate-marker-dial-1 5s 0.2s linear infinite;
-            animation: rotate-marker-dial-1 5s 0.2s linear infinite;*/
     transform-origin: 50% 4em;
   }
