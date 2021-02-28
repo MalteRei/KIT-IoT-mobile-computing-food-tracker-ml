@@ -34,7 +34,7 @@ const NutritionPanel: React.FunctionComponent<INutritionPanelProps> = (props) =>
 
     const roundDecimalPlace = 100;
    
-    const kiloCalories =Math.round(nutritionalValues.kiloCalories * amountFactor * roundDecimalPlace) / roundDecimalPlace;
+    const kiloCalories = Math.round(nutritionalValues.kiloCalories * amountFactor * roundDecimalPlace) / roundDecimalPlace;
     const kiloJoule = Math.round(nutritionalValues.kiloJoule * amountFactor * roundDecimalPlace) / roundDecimalPlace;
     const fat = Math.round(nutritionalValues.fat * amountFactor * roundDecimalPlace) / roundDecimalPlace;
     const carbohydrates = Math.round(nutritionalValues.carbohydrates * amountFactor * roundDecimalPlace) / roundDecimalPlace;

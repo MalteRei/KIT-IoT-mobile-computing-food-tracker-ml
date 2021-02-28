@@ -10,8 +10,11 @@ body {
 
 :root {
   --color-primary:  rgb(0, 120, 212);;
-  --color-primary-darker: rgb(16, 110, 190);
+  --color-primary-darker: rgb(5, 8, 10);
   --color-primary-dark: rgb(0, 90, 158);
+  --color-pink: #f5317f;
+  --color-light-blue: #15EDED;
+  --color-light-green: #aff57a;
 
  /* --color-primary:  #fecd47;
   --colors-bg-skyblue: #cad9e5;
@@ -39,7 +42,9 @@ body {
     --color-primary:  rgb(0, 120, 212);;
     --color-primary-darker: rgb(16, 110, 190);
     --color-primary-dark: rgb(0, 90, 158);
-  
+    --color-pink: #fc1d20;
+    --color-light-blue: #32cbd4;
+    --color-light-green: #9cfc33;
       --color-background: rgba(26, 26, 26, 1);
       --color-foreground: rgba(51, 51, 51, 1);
       --color-background-transparent: rgba(26, 26, 26, 0.7);

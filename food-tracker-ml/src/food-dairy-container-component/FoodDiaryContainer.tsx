@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ButtonRowComponent from '../button-row-component/ButtonRowComponent';
 import DayNutritionStatistic from '../day-nutrition-statistic-component/DayNutritionStatistic';
 import FoodDiaryService from '../helpers/FoodDiaryService';
-import NutritionService from '../helpers/NutritionService';
+import NutritionService, { INutritionalValue } from '../helpers/NutritionService';
 import IconButton from '../icon-button-component/IconButton';
 import Icons from '../models/Icons';
 import IFoodDiaryEntry from '../models/IFoodDiaryEntry';
@@ -19,19 +19,30 @@ const nutritionService = new NutritionService();
 const FoodDiaryContainer: React.FunctionComponent = (props) => {
     const [showDiary, setShowDiary] = useState<boolean>(false);
     const [currentDate, setCurrentDate] = useState<Date>(new Date());
-    const [foodEatenOnCurrentDate, setFoodEatenOnCurrentDate] = useState<IFoodDiaryEntry[] | null>(null);
+    const [foodEatenOnCurrentDate, setFoodEatenOnCurrentDate] = useState<(IFoodDiaryEntry & INutritionalValue)[] | null>(null);
     const handleToggleShowDiary = () => {
         setShowDiary(!showDiary);
     }
     const getFoodForCurrentDate = () => {
         if(foodDiaryService.isAvailable()) {
-           return foodDiaryService.getFoodsOfDay(currentDate);
+          return foodDiaryService.getFoodsOfDay(currentDate);
+
         }
         return [];
     }
+    const getNutritionalValuesForFoods = (foods: IFoodDiaryEntry[]) => {
+        return foods.map(food => {
+            const nutritionValue = nutritionService.getNutritionalValueOf(food.foodName);
+            if(nutritionValue !== undefined){
+                return {...food, ...nutritionValue};
+            } else {
+                return {...food, protein: Number.NaN, carbohydrates: Number.NaN, fat: Number.NaN, kiloCalories: Number.NaN, kiloJoule: Number.NaN}
+            }
+        })
+    }
     useEffect(() => {
         const foodForCurrentDate = getFoodForCurrentDate();
-        setFoodEatenOnCurrentDate(foodForCurrentDate);
+        setFoodEatenOnCurrentDate(getNutritionalValuesForFoods(foodForCurrentDate));
     },[currentDate, showDiary]);
 
     let diaryPanelContent: JSX.Element | undefined = undefined;
@@ -42,8 +53,8 @@ const FoodDiaryContainer: React.FunctionComponent = (props) => {
                 // display nutrition values for the day
                 diaryPanelContent = (
                     <Tabs>
-                        <TabItem label="Tab 1">
-                            <DayNutritionStatistic/>
+                        <TabItem label="Statistics">
+                            <DayNutritionStatistic foodsEatenOnDay={foodEatenOnCurrentDate}/>
                         </TabItem>
                         <TabItem label="Tab 1">
                             Tab content 2
@@ -79,15 +90,17 @@ const FoodDiaryContainer: React.FunctionComponent = (props) => {
         </div>
        
     ) : undefined;
+
+    const toggleDiaryButton = showDiary? undefined :  <div className="bottom-row">
+    <RoundIconButton onClick={handleToggleShowDiary} icon={Icons.Add}/>
+
+    </div>;
     return(
         <TwoPanePrompt leftPaneChildrenIndex={0}>
             <section className="food-diary"> 
-               
-                <div className="bottom-row">
-                <RoundIconButton onClick={handleToggleShowDiary} icon={Icons.Add}/>
-
-                </div>
-                {diaryPanel}
+            {diaryPanel}
+            {toggleDiaryButton}
+            
             </section>
         </TwoPanePrompt>
     )

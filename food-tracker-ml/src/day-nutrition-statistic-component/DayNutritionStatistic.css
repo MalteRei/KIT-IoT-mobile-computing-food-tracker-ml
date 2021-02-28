@@ -1,0 +1,13 @@
+.day-nutrition-statistic-container{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap
+}
+
+.labels-container{
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-top: 1.75em;
+}
