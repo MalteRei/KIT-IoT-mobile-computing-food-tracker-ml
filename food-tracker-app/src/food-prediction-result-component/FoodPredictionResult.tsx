@@ -15,7 +15,9 @@ const FoodPredictionResult: React.FunctionComponent<IFoodPredictionResult> = (pr
     const handleFoodSelected = (selectedFood: string | undefined) => {
         setSelectedFood(selectedFood);
     };
-
+    if(currentPrediction?.label === 'none') {
+        return null;
+    }
 
     const currentPredictionCard = (currentPrediction !== undefined) ? <div className="prediction-card" onClick={() => handleFoodSelected(currentPrediction.label)}>
        <h5 style={{marginLeft: '16px'}}>

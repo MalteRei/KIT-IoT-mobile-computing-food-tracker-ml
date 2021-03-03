@@ -3,6 +3,8 @@ import IFoodDiaryEntry from "../models/IFoodDiaryEntry";
 class FoodDiaryService {
     private readonly oldestDateKeyInStorage = 'oldest-date-in-diary';
 
+    private added = false;
+
     addFoodToToday(foodName: string, amountInGramm: number) {
         if(amountInGramm <= 0){
             return;
@@ -67,6 +69,44 @@ class FoodDiaryService {
 
     getFoodsOfDay(day: Date): IFoodDiaryEntry[]{
         if (typeof(Storage) !== "undefined") {
+            if(!this.added) {
+                this.added = true;
+                const yesterday = new Date(2021,3,2);
+                const yesterdayString = yesterday.toISOString().split('T')[0];
+                const existingFoodsString = localStorage.getItem(yesterdayString);
+                if(!existingFoodsString) {
+                    console.log(existingFoodsString);
+                    const foods: IFoodDiaryEntry[] = [
+                        {
+                            foodName: 'avocado',
+                            amountInGramm: 100
+                        },
+                        {
+                            foodName: 'almond',
+                            amountInGramm: 100
+                        },
+                        {
+                            foodName: 'broccoli',
+                            amountInGramm: 500
+                        },
+                        {
+                            foodName: 'tofu',
+                            amountInGramm: 200
+                        },
+                        {
+                            foodName: 'olive oil',
+                            amountInGramm: 100
+                        }
+                    ];
+                    localStorage.setItem(yesterdayString, JSON.stringify(foods));
+
+
+                }
+
+
+            }
+
+
             const dateString = day.toISOString().split('T')[0];
             const existingFoodsString = localStorage.getItem(dateString);
             if(existingFoodsString !== null) {
