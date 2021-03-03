@@ -71,7 +71,7 @@ class FoodDiaryService {
         if (typeof(Storage) !== "undefined") {
             if(!this.added) {
                 this.added = true;
-                const yesterday = new Date(2021,3,2);
+                const yesterday = new Date(2021,2,2);
                 const yesterdayString = yesterday.toISOString().split('T')[0];
                 const existingFoodsString = localStorage.getItem(yesterdayString);
                 if(!existingFoodsString) {
