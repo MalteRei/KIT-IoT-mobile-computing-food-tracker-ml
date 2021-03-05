@@ -86,12 +86,6 @@ class ImageModel {
                 label: classLabel,
                 confidence: result[index]
             } as IPrediction))
-            
-           /* this.classes?.reduce(
-                (acc, class_, idx) => {
-                    return { [class_]: resultsArray[idx], ...acc }
-                }, {}
-            )*/
         }
         }
         return undefined;
@@ -145,9 +139,9 @@ class ImageModel {
             return results.dataSync();
 
             
-        } /*else {
+        } else {
             console.error("Model not loaded, please await this.load() first.");
-        }*/
+        }
     }
 }
 
